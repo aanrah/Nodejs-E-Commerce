@@ -1,0 +1,28 @@
+<section>
+  <div class="container mt-10">
+    <div class="row">
+      {{#each products}}
+        <div class="col-lg-3 col-md-6 col-sm-12 p-3">
+          <div class="card h-100" style="width: 18rem;">
+            <img
+              src="/product-images/{{this._id}}.jpg"
+              class="card-img-top p-3"
+              alt=""
+            />
+            <div class="card-body">
+              <span
+                class="badge rounded-pill text-bg-primary"
+              >{{this.Category}}</span>
+              <h6 class="card-brand">{{this.Brand}}</h6>
+              <h5 class="card-title">{{this.Name}}</h5>
+              <p class="card-text">{{this.Description}}</p>
+              <h6 class="card-price">${{this.Price}}</h6>
+              <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add to
+                cart</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

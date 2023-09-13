@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-6 m-auto">
+    <div class="container mt-5 pl-5">
+      <h2 class="text-center">Create Account</h2>
+
+      <form action="/signup" method="post">
+
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            placeholder="name"
+          />
+          <label for="name">Name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            placeholder="name@example.com"
+          />
+          <label for="email">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Password"
+          />
+          <label for="password">Password</label>
+        </div>
+
+        <a href="/login">Already have an account?</a>
+
+        <button class="btn btn-primary float-end" type="submit">Sign Up</button>
+
+      </form>
+    </div>
+  </div>
+</div>

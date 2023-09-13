@@ -1,0 +1,78 @@
+<section>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <h5 class="text-center">Add Product</h5>
+        <form
+          action="/admin/add-product"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label">Product Name</label>
+              <input
+                type="text"
+                name="Name"
+                class="form-control"
+                placeholder="Product Name"
+              />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Brand Name</label>
+              <input
+                type="text"
+                name="Brand"
+                class="form-control"
+                placeholder="Brand"
+              />
+            </div>
+          </div>
+          <label class="form-label">Category</label>
+          <input
+            type="text"
+            name="Category"
+            class="form-control"
+            placeholder="Category"
+          />
+          <label class="form-label">Description</label>
+          <input
+            type="text"
+            name="Description"
+            class="form-control"
+            placeholder="Description"
+          />
+          <label class="form-label">Price</label>
+          <input
+            type="text"
+            name="Price"
+            class="form-control"
+            placeholder="$"
+          />
+          <label class="form-label">Upload Image</label>
+          <img
+            src=""
+            style="width: 75px; height: 75px; visibility: hidden"
+            id="thumbImg"
+            class="p-3"
+          />
+          <input
+            type="file"
+            name="Image"
+            class="form-control"
+            onchange="showThumb(event)"
+          />
+
+          <button type="submit" class="btn btn-warning mt-4">Submit</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function showThumb(event){ document.getElementById("thumbImg").src =
+  URL.createObjectURL(event.target.files[0]);
+  document.getElementById("thumbImg").style.visibility = "visible"; }
+</script>

@@ -1,0 +1,77 @@
+<section>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <h5 class="text-center">Edit Product</h5>
+        <form
+          action="/admin/edit-product/{{product._id}}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label">Product Name</label>
+              <input
+                type="text"
+                name="Name"
+                class="form-control"
+                value="{{product.Name}}"
+              />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Brand Name</label>
+              <input
+                type="text"
+                name="Brand"
+                class="form-control"
+                value="{{product.Brand}}"
+              />
+            </div>
+          </div>
+          <label class="form-label">Category</label>
+          <input
+            type="text"
+            name="Category"
+            class="form-control"
+            value="{{product.Category}}"
+          />
+          <label class="form-label">Description</label>
+          <input
+            type="text"
+            name="Description"
+            class="form-control"
+            value="{{product.Description}}"
+          />
+          <label class="form-label">Price</label>
+          <input
+            type="text"
+            name="Price"
+            class="form-control"
+            value="{{product.Price}}"
+          />
+          <label class="form-label">Change Image</label>
+          <img
+            src="/product-images/{{product._id}}.jpg"
+            style="width:75px; height:75px"
+            id="thumbImg"
+            class="p-3"
+          />
+          <input
+            type="file"
+            name="Image"
+            class="form-control"
+            onchange="changeThumb(event)"
+          />
+
+          <button type="submit" class="btn btn-warning mt-4">Update</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function changeThumb(event){ document.getElementById("thumbImg").src =
+  URL.createObjectURL(event.target.files[0]); }
+</script>
