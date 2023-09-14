@@ -44,13 +44,21 @@ router.post("/signup", (req, res) => {
 
 router.post("/login", (req, res) => {
   userHelper.userLogin(req.body).then((response) => {
-    if (response.status) {
-      req.session.loggedIn = true;
-      req.session.user = response.user;
-      res.redirect("/");
+    if (response.adminStatus) {
+      req.session.admin = true;
+      req.session.adminLoggedIn = true;
+      res.redirect("/admin");
     } else {
-      req.session.loginErr = "Invalid username or password";
-      res.redirect("/login");
+      if (response.status) {
+        console.log(response);
+        req.session.loggedIn = true;
+        req.session.user = response.user;
+        res.redirect("/");
+      } else {
+        console.log(response);
+        req.session.loginErr = "Invalid username or password";
+        res.redirect("/login");
+      }
     }
   });
 });

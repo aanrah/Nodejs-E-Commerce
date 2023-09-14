@@ -1,6 +1,7 @@
 var db = require("../config/connection");
 var collect = require("../config/collection");
 const encrypt = require("bcrypt");
+require("dotenv").config();
 
 module.exports = {
   userSignup: (userData) => {
@@ -17,24 +18,46 @@ module.exports = {
 
   userLogin: (loginData) => {
     return new Promise(async (resolve, reject) => {
-      let userStatus = false;
+      //let adminStatus = false;
       let response = {};
       let dbUser = await db
         .get()
         .collection(collect.USER_COLLECTION)
         .findOne({ email: loginData.email });
       if (dbUser) {
-        encrypt.compare(loginData.password, dbUser.password).then((status) => {
-          if (status) {
-            console.log("login success");
-            response.user = dbUser;
-            response.status = true;
-            resolve(response);
-          } else {
-            console.log("login failed");
-            resolve({ status: false });
-          }
-        });
+        if (dbUser.email === process.env.ADMIN_USERNAME) {
+          console.log("admin name checked");
+          encrypt
+            .compare(loginData.password, dbUser.password)
+            .then((status) => {
+              if (status) {
+                console.log("admin login success");
+                /* response.admin = dbUser;
+            response.adminStatus = true; */
+                response.adminStatus = true;
+                resolve(response);
+              } else {
+                response.adminStatus = false;
+                console.log("admin login failed");
+                resolve(response);
+              }
+            });
+        } else {
+          console.log(dbUser);
+          encrypt
+            .compare(loginData.password, dbUser.password)
+            .then((status) => {
+              if (status) {
+                console.log("login success");
+                response.user = dbUser;
+                response.status = true;
+                resolve(response);
+              } else {
+                console.log("login failed");
+                resolve({ status: false });
+              }
+            });
+        }
       } else {
         console.log("No user found");
         resolve({ status: false });

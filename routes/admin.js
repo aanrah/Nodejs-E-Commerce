@@ -1,16 +1,25 @@
 var express = require("express");
 var router = express.Router();
 var productHelper = require("../helpers/product-helpers");
+var userHelper = require("../helpers/user-helpers");
 const fs = require("fs");
 
+const verifyAdmin = (req, res, next) => {
+  if (req.session.admin && req.session.adminLoggedIn) {
+    next();
+  } else {
+    return res.status(403).send("Access denied");
+  }
+};
+
 /* GET products for admin listing */
-router.get("/", function (req, res, next) {
+router.get("/", verifyAdmin, function (req, res, next) {
   productHelper.getAllProducts().then((products) => {
     res.render("admin/admin-products", { products, admin: true });
   });
 });
 
-router.get("/add-product", function (req, res) {
+router.get("/add-product", verifyAdmin, function (req, res) {
   res.render("admin/add-product", { admin: true });
 });
 
@@ -25,7 +34,7 @@ router.post("/add-product", (req, res) => {
   });
 });
 
-router.get("/delete-product/:id", (req, res) => {
+router.get("/delete-product/:id", verifyAdmin, (req, res) => {
   let prodId = req.params.id;
   let imgPath = "./public/product-images/" + prodId + ".jpg";
   fs.unlink(imgPath, (err) => {
@@ -42,7 +51,7 @@ router.get("/delete-product/:id", (req, res) => {
   });
 });
 
-router.get("/edit-product/:id", (req, res) => {
+router.get("/edit-product/:id", verifyAdmin, (req, res) => {
   productHelper.getOneProduct(req.params.id).then((product) => {
     res.render("admin/edit-product", { product, admin: true });
   });
