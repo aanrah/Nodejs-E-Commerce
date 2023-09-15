@@ -41,8 +41,8 @@
         <h5><b>Summary</b></h5>
         <hr class="d-md-none" />
         <div class="row">
-          <div class="col">ITEMS 3</div>
-          <div class="col text-right">&dollar; 132.00</div>
+          <div class="col">ITEMS</div>
+          <div class="col text-right" id="totalItems">{{totalItems}}</div>
         </div>
         <div class="row">
           <div class="col">TOTAL PRICE</div>
@@ -57,6 +57,7 @@
 <script>
   function changeQuantity(cartId, prodId, count) {
     let quantity = parseInt(document.getElementById(prodId).innerHTML);
+    let totalItem = parseInt(document.getElementById("totalItems").innerHTML);
     $.ajax({
       url: '/change-product-quantity',
       data: {
@@ -72,6 +73,7 @@
           location.reload();
         } else {
           document.getElementById(prodId).innerHTML = quantity + count;
+          document.getElementById("totalItems").innerHTML = totalItem + count;
           document.getElementById("totalPrice").innerHTML = response.total;
         }
         

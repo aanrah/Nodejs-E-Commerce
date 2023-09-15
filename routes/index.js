@@ -67,7 +67,13 @@ router.get("/cart", verifyLogin, async (req, res) => {
   let user = req.session.user;
   let cartItems = await productHelper.getCartProducts(req.session.user._id);
   let total = await productHelper.getTotal(req.session.user._id);
-  res.render("user/cart", { cartItems, user, total });
+  let totalItems = 0;
+
+  cartItems.forEach((cartItem) => {
+    totalItems += cartItem.quantity;
+  });
+
+  res.render("user/cart", { cartItems, user, total, totalItems });
 });
 
 router.get("/add-to-cart/:id", verifyLogin, (req, res) => {
