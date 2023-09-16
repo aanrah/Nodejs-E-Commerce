@@ -253,4 +253,38 @@ module.exports = {
       resolve(total[0].total);
     });
   },
+
+  cartToOrder: (orderDetails, total) => {
+    return new Promise(async (resolve, reject) => {
+      let cart = await db
+        .get()
+        .collection(collect.CART_COLLECTION)
+        .findOne({ user: new objectId(orderDetails.userId) });
+      let status = orderDetails.paymentMethod === "COD" ? "placed" : "pending";
+      let order = {
+        user: cart.user,
+        products: cart.products,
+        total: total,
+        paymentMethod: orderDetails.paymentMethod,
+        status: status,
+        orderDate: new Date(),
+        deliverDetails: {
+          name: orderDetails.deliveryName,
+          address: orderDetails.address,
+          pincode: orderDetails.pincode,
+          phone: orderDetails.mobile,
+        },
+      };
+      db.get()
+        .collection(collect.ORDER_COLLECTION)
+        .insertOne(order)
+        .then(async (response) => {
+          await db
+            .get()
+            .collection(collect.CART_COLLECTION)
+            .deleteOne({ user: new objectId(orderDetails.userId) });
+          resolve();
+        });
+    });
+  },
 };

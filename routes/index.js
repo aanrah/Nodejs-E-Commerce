@@ -50,12 +50,10 @@ router.post("/login", (req, res) => {
       res.redirect("/admin");
     } else {
       if (response.status) {
-        console.log(response);
         req.session.loggedIn = true;
         req.session.user = response.user;
         res.redirect("/");
       } else {
-        console.log(response);
         req.session.loginErr = "Invalid username or password";
         res.redirect("/login");
       }
@@ -92,6 +90,11 @@ router.get("/place-order", verifyLogin, async (req, res) => {
   let user = req.session.user;
   let total = await productHelper.getTotal(user._id);
   res.render("user/place-order", { user, total });
+});
+
+router.post("/place-order", verifyLogin, async (req, res) => {
+  let total = await productHelper.getTotal(req.body.userId);
+  productHelper.cartToOrder(req.body, total);
 });
 
 router.get("/logout", (req, res) => {
