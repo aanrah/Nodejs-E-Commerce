@@ -1,5 +1,5 @@
 <section>
-  <div class="container mt-5">
+  <div class="container mt-5" style="padding-top:50px">
     <h5>Products</h5>
     <div>
       <a href="/admin/add-product" class="btn btn-warning ms-auto float-end">Add
@@ -8,19 +8,18 @@
     <table class="table border-warning">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Brand</th>
           <th scope="col">Category</th>
           <th scope="col">Description</th>
           <th scope="col">Price</th>
           <th scope="col">Image</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
         {{#each products}}
           <tr>
-            <th scope="row">{{@index}}</th>
             <td>{{this.Name}}</td>
             <td>{{this.Brand}}</td>
             <td>{{this.Category}}</td>

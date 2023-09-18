@@ -44,10 +44,8 @@ router.get("/delete-product/:id", verifyAdmin, (req, res) => {
       console.error(err);
     }
   });
-
   productHelper.deleteProduct(prodId).then(() => {
     res.redirect("/admin");
-    console.log("Finished calling");
   });
 });
 
@@ -64,6 +62,12 @@ router.post("/edit-product/:id", (req, res) => {
       let image = req.files.Image;
       image.mv("./public/product-images/" + req.params.id + ".jpg");
     }
+  });
+});
+
+router.get("/admin-users", verifyAdmin, (req, res) => {
+  userHelper.getUsers().then((users) => {
+    res.render("admin/admin-users", { users, admin: true });
   });
 });
 

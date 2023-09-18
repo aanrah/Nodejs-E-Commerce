@@ -1,0 +1,26 @@
+<section>
+  <div class="container mt-5" style="padding-top:50px">
+    <h5>Users</h5>
+
+    <table class="table border-warning">
+      <thead>
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Email</th>
+          <th scope="col">Orders</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+          <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>Past Orders for {{this.name}}</td>
+
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
